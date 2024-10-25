@@ -46,6 +46,12 @@ a {
     text-decoration: none;
 }
 
+.toast {
+    padding: 10px 16px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
 /* APP */
 .app {
     width: 100%;
@@ -89,6 +95,25 @@ a {
     background-color: #e7e7e7;
 }
 
+.nav-cart {
+    position: relative;
+}
+
+.nav-cart-length {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--red);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
 /* MAIN */
 #main {
     margin-top: 60px;
@@ -125,6 +150,7 @@ a {
     background-color: #e7e7e7;
 }
 
+/* CONTENT */
 #content {
     width: calc(100% - var(--sidebar-width));
     margin-left: var(--sidebar-width);
@@ -186,6 +212,7 @@ a {
     padding-top: 6px;
 }
 
+/* MODEL */
 .model {
     position: fixed;
     top: 0;
@@ -286,7 +313,7 @@ a {
     border: none;
     background: var(--primary);
     border-bottom: 0.5px solid #111;
-    box-shadow: 0px 5px 0px #ff5117;
+    box-shadow: 0px 3px 0px #ff5117;
     cursor: pointer;
     width: 100%;
     transition: all 0.1s linear;
