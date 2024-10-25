@@ -146,6 +146,10 @@ a {
     transition: all 0.1s ease;
 }
 
+.sidebar-item.active {
+    background-color: #e7e7e7;
+}
+
 .sidebar-item:hover {
     background-color: #e7e7e7;
 }

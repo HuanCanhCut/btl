@@ -8,6 +8,7 @@ const overlay = document.querySelector('.overlay')
 
 const app = {
     cart: JSON.parse(localStorage.getItem('cart')) || [],
+    sidebarItemActiveIndex: 0,
 
     cartLength() {
         return this.cart.length
@@ -57,10 +58,19 @@ const app = {
     renderSidebar() {
         const categories = JSON.parse(localStorage.getItem('product')) || this.groupByCategory()
 
-        const html = Object.keys(categories).map((item) => {
-            return `<li class="sidebar-item">${item}</li>`
+        const html = Object.keys(categories).map((item, index) => {
+            return `<li class="sidebar-item ${
+                index === this.sidebarItemActiveIndex ? 'active' : ''
+            }" data-categorySidebar="${item}" data-index="${index}">${item}</li>`
         })
         sidebarList.innerHTML = html.join('')
+    },
+
+    scrollToCategory(category) {
+        // Lấy element có attribute data-category bằng category
+        const categoryElement = document.querySelector(`h2[data-category="${category}"]`)
+
+        categoryElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
     },
 
     renderProduct() {
@@ -69,7 +79,7 @@ const app = {
         const html = Object.keys(categories).map((category) => {
             return `
                 <div class="content-container">
-                    <h2 class="content-title">${category}</h2>
+                    <h2 class="content-title" data-category="${category}">${category}</h2>
                     <ul class="content-list">
                         ${categories[category]
                             .map((item) => {
@@ -166,6 +176,18 @@ const app = {
                 // get product id
                 const productId = e.target.closest('.model-add-cart').dataset.id
                 this.addToCart(productId)
+            }
+        }
+
+        // Scroll đến category khi click category trong sidebar
+        sidebarList.onclick = (e) => {
+            if (e.target.closest('.sidebar-item')) {
+                // Lấy category từ attribute data-categorySidebar
+                const category = e.target.closest('.sidebar-item').getAttribute('data-categorySidebar')
+                this.sidebarItemActiveIndex = Number(e.target.closest('.sidebar-item').dataset.index)
+                this.scrollToCategory(category)
+
+                this.renderSidebar()
             }
         }
     },
