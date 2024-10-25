@@ -95,6 +95,24 @@ a {
     background-color: #e7e7e7;
 }
 
+.tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tab-item {
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: 4px;
+    background-color: #e7e7e7;
+    border: none;
+}
+
+.tab-item.active {
+    background-color: #ff5117;
+    color: #fff;
+}
+
 .nav-cart {
     position: relative;
 }

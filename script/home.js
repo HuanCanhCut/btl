@@ -5,8 +5,10 @@ const content = document.querySelector('#content')
 const model = document.querySelector('.model')
 const modelContainer = document.querySelector('.model-container')
 const overlay = document.querySelector('.overlay')
+const tabs = document.querySelector('.tabs')
 
 const app = {
+    isSeasonal: false,
     cart: JSON.parse(localStorage.getItem('cart')) || [],
     sidebarItemActiveIndex: 0,
 
@@ -45,6 +47,15 @@ const app = {
         }).showToast()
     },
 
+    // Load tab active
+    loadTabActive() {
+        const seasonalTab = tabs.querySelector('[data-tab="seasonal"]')
+        const categoryTab = tabs.querySelector('[data-tab="category"]')
+
+        seasonalTab.classList.toggle('active', this.isSeasonal)
+        categoryTab.classList.toggle('active', !this.isSeasonal)
+    },
+
     // Phân loại sản phẩm theo category
     groupByCategory() {
         return products.reduce((acc, item) => {
@@ -54,9 +65,19 @@ const app = {
         }, {})
     },
 
+    groupBySeasonal() {
+        return products.reduce((acc, item) => {
+            acc[item.seasonal] = acc[item.seasonal] || []
+            acc[item.seasonal].push(item)
+            return acc
+        }, {})
+    },
+
     // Render product
     renderSidebar() {
-        const categories = JSON.parse(localStorage.getItem('product')) || this.groupByCategory()
+        const categories = this.isSeasonal
+            ? JSON.parse(localStorage.getItem('seasonal')) || this.groupBySeasonal()
+            : JSON.parse(localStorage.getItem('product')) || this.groupByCategory()
 
         const html = Object.keys(categories).map((item, index) => {
             return `<li class="sidebar-item ${
@@ -74,7 +95,9 @@ const app = {
     },
 
     renderProduct() {
-        const categories = JSON.parse(localStorage.getItem('product')) || this.groupByCategory()
+        const categories = this.isSeasonal
+            ? JSON.parse(localStorage.getItem('seasonal')) || this.groupBySeasonal()
+            : JSON.parse(localStorage.getItem('product')) || this.groupByCategory()
 
         const html = Object.keys(categories).map((category) => {
             return `
@@ -188,6 +211,16 @@ const app = {
                 this.scrollToCategory(category)
 
                 this.renderSidebar()
+            }
+        }
+
+        tabs.onclick = (e) => {
+            if (e.target.closest('.tab-item')) {
+                const tab = e.target.closest('.tab-item').dataset.tab
+                this.isSeasonal = tab === 'seasonal'
+                this.loadTabActive()
+                this.renderSidebar()
+                this.renderProduct()
             }
         }
     },
