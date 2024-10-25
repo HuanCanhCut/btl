@@ -4,10 +4,31 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        <link rel="stylesheet" href="style/header.css" />
+        <link rel="stylesheet" href="style/search.css" />
+        <link rel="stylesheet" href="style/model.css" />
+        <link rel="stylesheet" href="style/product.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
     </head>
     <body>
-        <div class="app">search</div>
+        <div class="app">
+            <div class="search-container">
+                <div class="input-group">
+                    <input type="text" id="search-input" placeholder=" " />
+                    <label for="search-input">Tìm kiếm sản phẩm</label>
+                </div>
+                <button>Tìm kiếm</button>
+            </div>
+            <main class="main">
+                <h2 class="product-title">Kết quả tìm kiếm</h2>
+                <ul class="product-list"></ul>
+            </main>
+        </div>
+
+        <!-- MODEL -->
+        <div class="model">
+            <div class="overlay"></div>
+            <div class="model-container"></div>
+        </div>
     </body>
+    <script type="module" src="script/search.js"></script>
 </html>

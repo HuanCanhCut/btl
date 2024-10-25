@@ -11,13 +11,10 @@ const app = {
     isSeasonal: false,
     cart: JSON.parse(localStorage.getItem('cart')) || [],
     sidebarItemActiveIndex: 0,
+    products: JSON.parse(localStorage.getItem('product')) || products || [],
 
     cartLength() {
         return this.cart.length
-    },
-
-    showToast(message) {
-        toastr.success(message, 'Thông báo')
     },
 
     updateCartLength() {
@@ -58,7 +55,7 @@ const app = {
 
     // Phân loại sản phẩm theo category
     groupByCategory() {
-        return products.reduce((acc, item) => {
+        return this.products.reduce((acc, item) => {
             acc[item.category] = acc[item.category] || []
             acc[item.category].push(item)
             return acc
@@ -66,7 +63,7 @@ const app = {
     },
 
     groupBySeasonal() {
-        return products.reduce((acc, item) => {
+        return this.products.reduce((acc, item) => {
             acc[item.seasonal] = acc[item.seasonal] || []
             acc[item.seasonal].push(item)
             return acc
@@ -75,9 +72,7 @@ const app = {
 
     // Render product
     renderSidebar() {
-        const categories = this.isSeasonal
-            ? JSON.parse(localStorage.getItem('seasonal')) || this.groupBySeasonal()
-            : JSON.parse(localStorage.getItem('product')) || this.groupByCategory()
+        const categories = this.isSeasonal ? this.groupBySeasonal() : this.groupByCategory()
 
         const html = Object.keys(categories).map((item, index) => {
             return `<li class="sidebar-item ${
@@ -95,23 +90,21 @@ const app = {
     },
 
     renderProduct() {
-        const categories = this.isSeasonal
-            ? JSON.parse(localStorage.getItem('seasonal')) || this.groupBySeasonal()
-            : JSON.parse(localStorage.getItem('product')) || this.groupByCategory()
+        const categories = this.isSeasonal ? this.groupBySeasonal() : this.groupByCategory()
 
         const html = Object.keys(categories).map((category) => {
             return `
-                <div class="content-container">
-                    <h2 class="content-title" data-category="${category}">${category}</h2>
-                    <ul class="content-list">
+                <div class="product-container">
+                    <h2 class="product-title" data-category="${category}">${category}</h2>
+                    <ul class="product-list">
                         ${categories[category]
                             .map((item) => {
                                 return `
-                                <li class="content-item" data-id="${item.id}">
+                                <li class="product-item" data-id="${item.id}">
                                     <img src="${item.image}" alt="${item.name}" />
-                                    <div class="content-item-info">
-                                        <h3 class="content-item-name">${item.name}</h3>
-                                        <p class="content-item-price">${item.price.toLocaleString()} VND</p>
+                                    <div class="product-item-info">
+                                        <h3 class="product-item-name">${item.name}</h3>
+                                        <p class="product-item-price">${item.price.toLocaleString()} VND</p>
                                         <p class="product-reaction"><span><i class="fa-solid fa-star"></i> ${
                                             item.star
                                         }</span> Đã bán: ${item.sold}</p>
@@ -152,8 +145,8 @@ const app = {
     handleEvent() {
         // Open model when click product
         content.onclick = (e) => {
-            if (e.target.closest('.content-item')) {
-                const productId = e.target.closest('.content-item').dataset.id
+            if (e.target.closest('.product-item')) {
+                const productId = e.target.closest('.product-item').dataset.id
                 model.classList.add('active')
 
                 const productInfo = products.find((item) => item.id === Number(productId))
@@ -217,6 +210,7 @@ const app = {
         tabs.onclick = (e) => {
             if (e.target.closest('.tab-item')) {
                 const tab = e.target.closest('.tab-item').dataset.tab
+
                 this.isSeasonal = tab === 'seasonal'
                 this.loadTabActive()
                 this.renderSidebar()
@@ -237,7 +231,7 @@ const app = {
     },
 
     start() {
-        localStorage.setItem('product', JSON.stringify(this.groupByCategory()))
+        localStorage.setItem('product', JSON.stringify(this.products))
         this.updateCartLength()
         this.renderSidebar()
         this.renderProduct()
