@@ -3,6 +3,5 @@
   "printWidth": 120,
   "semi": false,
   "singleQuote": true,
-  "arrowParens": "always",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "arrowParens": "always"
 }
