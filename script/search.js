@@ -1,12 +1,16 @@
 import products from './product.js'
+import event from './event.js'
 
 const input = document.getElementById('search-input')
 const searchBtn = document.querySelector('.search-container button')
 const productList = document.querySelector('.product-list')
+const overlay = document.querySelector('.overlay')
 const model = document.querySelector('.model')
-const modelContainer = document.querySelector('.model-container')
 
 const app = {
+    products: JSON.parse(localStorage.getItem('products')) || products,
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
+
     handleSearch() {
         const value = input.value.trim()
         if (!value) return
@@ -47,46 +51,42 @@ const app = {
         searchBtn.addEventListener('click', this.handleSearch)
 
         productList.onclick = (e) => {
-            if (e.target.closest('.product-item')) {
-                const productId = e.target.closest('.product-item').dataset.id
-                model.classList.add('active')
+            event.openModel(e, this.products)
+        }
 
-                const productInfo = products.find((item) => item.id === Number(productId))
+        // Close model when click overlay
+        overlay.onclick = () => {
+            model.classList.remove('active')
+        }
 
-                modelContainer.innerHTML = `
-                    <header class="model-header">
-                        <h2>Thông tin sản phẩm</h2>
-                        <button class="model-close">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </header>
-                    <main class="model-main">
-                        <img
-                            src="${productInfo.image}"
-                            alt="image"
-                        />
-                        <div class="model-info">
-                            <h4>${productInfo.name}</h4>
-                            <p class="model-info-price">${productInfo.price.toLocaleString()} VND</p>
-                            <p class="product-reaction"><span><i class="fa-solid fa-star"></i> ${
-                                productInfo.star
-                            }</span> Đã bán: ${productInfo.sold}</p>
-                        </div>
-                        
-                        <button class="model-add-cart" data-id="${productInfo.id}">Thêm vào giỏ hàng</button>
-                    </main>
-                `
+        model.onclick = (e) => {
+            // Close model when click close button
+            if (e.target.closest('.model-close')) {
+                model.classList.remove('active')
+            }
+
+            if (e.target.closest('.model-add-cart')) {
+                const productId = e.target.closest('.model-add-cart').dataset.id
+                event.addToCart(productId, this.products, this.cart)
             }
         }
     },
 
     windowEvent() {
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') this.handleSearch()
+            switch (e.key) {
+                case 'Enter':
+                    this.handleSearch()
+                    break
+                case 'Escape':
+                    model.classList.remove('active')
+                    break
+            }
         })
     },
 
     start() {
+        input.focus()
         this.handleEvent()
         this.windowEvent()
     },

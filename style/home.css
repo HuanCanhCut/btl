@@ -173,7 +173,7 @@ a {
 }
 
 /* CONTENT */
-#content {
+#product-list {
     width: calc(100% - var(--sidebar-width));
     margin-left: var(--sidebar-width);
     padding: 16px;

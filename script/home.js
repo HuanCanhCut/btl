@@ -1,48 +1,17 @@
 import products from './product.js'
+import event from './event.js'
 
 const sidebarList = document.querySelector('.sidebar-list')
-const content = document.querySelector('#content')
+const productList = document.querySelector('#product-list')
 const model = document.querySelector('.model')
-const modelContainer = document.querySelector('.model-container')
 const overlay = document.querySelector('.overlay')
 const tabs = document.querySelector('.tabs')
 
 const app = {
     isSeasonal: false,
-    cart: JSON.parse(localStorage.getItem('cart')) || [],
     sidebarItemActiveIndex: 0,
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
     products: JSON.parse(localStorage.getItem('product')) || products || [],
-
-    cartLength() {
-        return this.cart.length
-    },
-
-    updateCartLength() {
-        const cartLength = this.cartLength()
-        document.querySelector('.nav-cart-length').textContent = cartLength
-    },
-
-    // Show toast của thư viện bên ngoài
-    showToast(message, type = 'success') {
-        const successStyle = 'linear-gradient(to right, #00b09b, #96c93d)'
-        const errorStyle = 'linear-gradient(to right, #ff0000, #ff9999)'
-        const warningStyle = 'linear-gradient(to right, #ffa500, #ffd700)'
-
-        Toastify({
-            text: message,
-            duration: 3000,
-            destination: 'https://github.com/apvarun/toastify-js',
-            newWindow: true,
-            close: true,
-            gravity: 'top', // `top` or `bottom`
-            position: 'right', // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-                background: type === 'success' ? successStyle : type === 'error' ? errorStyle : warningStyle,
-            },
-            onClick: function () {}, // Callback after click
-        }).showToast()
-    },
 
     // Load tab active
     loadTabActive() {
@@ -118,63 +87,13 @@ const app = {
             `
         })
 
-        content.innerHTML = html.join('')
-    },
-
-    addToCart(productId) {
-        const product = products.find((item) => item.id === Number(productId))
-
-        // kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-        const isInCart = this.cart.some((item) => item.id === Number(productId))
-
-        // nếu sản phẩm không có trong giỏ hàng thì thêm vào
-        if (isInCart) {
-            this.showToast('Sản phẩm đã có trong giỏ hàng', 'error')
-            model.classList.remove('active')
-            return
-        }
-
-        this.cart.push(product)
-        localStorage.setItem('cart', JSON.stringify(this.cart))
-        this.updateCartLength()
-        this.showToast('Thêm vào giỏ hàng thành công')
-
-        model.classList.remove('active')
+        productList.innerHTML = html.join('')
     },
 
     handleEvent() {
         // Open model when click product
-        content.onclick = (e) => {
-            if (e.target.closest('.product-item')) {
-                const productId = e.target.closest('.product-item').dataset.id
-                model.classList.add('active')
-
-                const productInfo = products.find((item) => item.id === Number(productId))
-
-                modelContainer.innerHTML = `
-                    <header class="model-header">
-                        <h2>Thông tin sản phẩm</h2>
-                        <button class="model-close">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </header>
-                    <main class="model-main">
-                        <img
-                            src="${productInfo.image}"
-                            alt="image"
-                        />
-                        <div class="model-info">
-                            <h4>${productInfo.name}</h4>
-                            <p class="model-info-price">${productInfo.price.toLocaleString()} VND</p>
-                            <p class="product-reaction"><span><i class="fa-solid fa-star"></i> ${
-                                productInfo.star
-                            }</span> Đã bán: ${productInfo.sold}</p>
-                        </div>
-                        
-                        <button class="model-add-cart" data-id="${productInfo.id}">Thêm vào giỏ hàng</button>
-                    </main>
-                `
-            }
+        productList.onclick = (e) => {
+            event.openModel(e, this.products)
         }
 
         // Close model when click overlay
@@ -189,9 +108,8 @@ const app = {
             }
 
             if (e.target.closest('.model-add-cart')) {
-                // get product id
                 const productId = e.target.closest('.model-add-cart').dataset.id
-                this.addToCart(productId)
+                event.addToCart(productId, products, this.cart)
             }
         }
 
@@ -231,8 +149,8 @@ const app = {
     },
 
     start() {
-        localStorage.setItem('product', JSON.stringify(this.products))
-        this.updateCartLength()
+        localStorage.setItem('product', JSON.stringify(products))
+        event.updateCartLength(this.cart)
         this.renderSidebar()
         this.renderProduct()
 
