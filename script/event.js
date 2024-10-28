@@ -23,11 +23,11 @@ const event = {
 
         Toastify({
             text: message,
-            duration: 3000,
+            duration: 1500,
             newWindow: true,
             close: true,
             gravity: 'top', // `top` or `bottom`
-            position: 'right', // `left`, `center` or `right`
+            position: 'center', // `left`, `center` or `right`
             stopOnFocus: true, // Prevents dismissing of toast on hover
             style: {
                 background: type === 'success' ? successStyle : type === 'error' ? errorStyle : warningStyle,
@@ -84,7 +84,7 @@ const event = {
             return
         }
 
-        cart.push(product)
+        cart.push({ ...product, quantity: 1 })
         localStorage.setItem('cart', JSON.stringify(cart))
         this.updateCartLength(cart)
         this.showToast('Thêm vào giỏ hàng thành công')

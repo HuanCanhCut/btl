@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+        <link rel="stylesheet" href="style/variable.css" />
+        <link rel="stylesheet" href="style/cart.css" />
+
+        <!-- Sử dụng thư viện bên ngoài -->
+        <!-- toastify -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+        <!-- document: https://github.com/apvarun/toastify-js -->
+    </head>
+    <body>
+        <main class="main">
+            <ul class="product-list"></ul>
+
+            <div class="model">
+                <div class="model-overlay"></div>
+                <div class="model-content">
+                    <h2 class="model-content-text">Bạn có chắc chắn muốn xóa sản phẩm không?</h2>
+                    <div class="model-content-btn-group">
+                        <button class="model-content-btn-cancel">Hủy</button>
+                        <button class="model-content-btn-confirm">Xóa</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-footer-select-all">
+                    <input
+                        type="checkbox"
+                        class="cart-footer-select-all-checkbox"
+                        id="cart-footer-select-all-checkbox"
+                    />
+                    <label for="cart-footer-select-all-checkbox" class="cart-footer-select-all-text">Chọn tất cả</label>
+                </div>
+                <div class="cart-footer-total-submit">
+                    <div class="cart-footer-total">
+                        <p class="cart-footer-total-text">
+                            Tổng tiền <span class="total-product-selected">(0 sản phẩm)</span>
+                        </p>
+                        <p class="cart-footer-total-price">0 VNĐ</p>
+                    </div>
+                    <button class="cart-footer-submit-btn">Đặt hàng</button>
+                </div>
+            </div>
+        </main>
+    </body>
+    <script type="module" src="script/cart.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</html>
