@@ -5,6 +5,7 @@
     --header-height: 60px;
     --sidebar-width: 250px;
     --primary: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    --default-background: #e7e7e7;
     --red: #fe2c55;
     --border: rgb(148, 148, 148);
     --price-color: #ff5117;
@@ -19,9 +20,16 @@
     font-family: 'Be Vietnam Pro', sans-serif;
 }
 
+/* Remove spin button of input number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 html {
     scroll-behavior: smooth;
-    background-color: #f5f5f5;
+    background-color: var(--default-background);
 }
 
 html *::-webkit-scrollbar {

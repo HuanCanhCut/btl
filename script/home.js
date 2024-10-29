@@ -149,7 +149,12 @@ const app = {
     },
 
     start() {
-        localStorage.setItem('product', JSON.stringify(products))
+        const localProduct = JSON.parse(localStorage.getItem('product'))
+
+        if (!localProduct) {
+            localStorage.setItem('product', JSON.stringify(products))
+        }
+
         event.updateCartLength(this.cart)
         this.renderSidebar()
         this.renderProduct()

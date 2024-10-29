@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style/variable.css" />
+        <link rel="stylesheet" href="style/manager.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+        <link rel="stylesheet" href="style/product.css" />
+        <!-- Sử dụng thư viện bên ngoài -->
+        <!-- toastify -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+        <!-- document: https://github.com/apvarun/toastify-js -->
+    </head>
+    <body>
+        <div class="app">
+            <h1 class="app-title">Quản lý sản phẩm</h1>
+
+            <header class="app-header">
+                <button class="app-header-btn app-header-edit-btn active" id="edit-and-delete-main">
+                    Sửa/Xóa sản phẩm
+                </button>
+                <button class="app-header-btn app-header-add-btn" id="add-product-main">Thêm sản phẩm</button>
+            </header>
+            <main class="main add-product-main">
+                <!-- Thêm sản phẩm -->
+
+                <form action="" class="add-product-form-container">
+                    <h2>Thêm sản phẩm</h2>
+
+                    <div class="add-product-form">
+                        <div class="add-product-form-item">
+                            <input name="name" type="text" id="add-product-form-name" placeholder=" " />
+                            <label for="add-product-form-name">Tên sản phẩm</label>
+                        </div>
+                        <div class="add-product-form-item">
+                            <input name="price" type="number" id="add-product-form-price" placeholder=" " />
+                            <label for="add-product-form-price">Giá sản phẩm</label>
+                        </div>
+                        <div class="add-product-form-item">
+                            <input name="image" type="text" id="add-product-form-img" placeholder=" " />
+                            <label for="add-product-form-img">Link ảnh sản phẩm</label>
+                        </div>
+                        <div class="add-product-form-item">
+                            <input name="category" type="text" id="add-product-form-description" placeholder=" " />
+                            <label for="add-product-form-description">Danh mục sản phẩm</label>
+                        </div>
+                        <div class="add-product-form-item">
+                            <select name="seasonal" id="add-product-form-seasonal">
+                                <option value="Mùa xuân">Mùa xuân</option>
+                                <option value="Mùa hè">Mùa hè</option>
+                                <option value="Mùa thu">Mùa thu</option>
+                                <option value="Mùa đông">Mùa đông</option>
+                            </select>
+                        </div>
+                        <small class="add-product-form-error"></small>
+                    </div>
+
+                    <!-- Type button là button để không submit form -->
+                    <button type="button" class="add-product-form-submit-btn">Thêm sản phẩm</button>
+                </form>
+            </main>
+            <main class="main edit-and-delete-main active">
+                <!-- Sửa xóa -->
+                <section id="product-list"></section>
+
+                <!-- DELETE MODEL  -->
+
+                <div class="delete-model">
+                    <div class="delete-model-overlay"></div>
+                    <div class="delete-model-content">
+                        <h2>Bạn có chắc chắn muốn xóa sản phẩm này không?</h2>
+                        <div class="delete-model-btn-container">
+                            <button class="delete-model-cancel-btn">Hủy</button>
+                            <button class="delete-model-confirm-btn">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODEL -->
+                <div class="model">
+                    <div class="model-overlay"></div>
+                    <div class="model-content">
+                        <header class="model-content-header">
+                            <h2>Title</h2>
+                            <button class="model-content-close-btn">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </header>
+                        <main class="model-content-main">
+                            <div class="model-content-img-container">
+                                <img
+                                    class="model-content-img"
+                                    src="https://m.yodycdn.com/blog/meme-meo-cute-yody-vn-56.jpg    "
+                                    alt=""
+                                />
+                                <input type="file" id="model-content-img" hidden accept="image/*" />
+                                <label for="model-content-img" class="model-content-img-change-btn">
+                                    <i class="fa-solid fa-camera"></i>
+                                </label>
+                            </div>
+                            <form action="" class="model-content-form">
+                                <div class="model-content-form-item">
+                                    <input type="text" id="model-content-form-name" placeholder=" " />
+                                    <label for="model-content-form-name">Tên sản phẩm</label>
+                                </div>
+                                <div class="model-content-form-item">
+                                    <input type="number" id="model-content-form-price" placeholder=" " />
+                                    <label for="model-content-form-price">Giá sản phẩm</label>
+                                </div>
+                                <small class="model-content-form-error"></small>
+                            </form>
+
+                            <div class="model-content-form-tabs">
+                                <button class="model-content-form-tabs-btn active" data-tab="add">
+                                    Thêm vào danh mục hiện có
+                                </button>
+                                <button class="model-content-form-tabs-btn" data-tab="create">Tạo danh mục mới</button>
+                            </div>
+
+                            <div class="model-content-new-category model-content-category" data-tab="create">
+                                <input type="text" id="model-content-new-category-name" placeholder=" " />
+                                <label for="model-content-new-category-name">Tên danh mục mới</label>
+                            </div>
+
+                            <select
+                                name=""
+                                class="model-content-form-category model-content-category active"
+                                data-tab="add"
+                            ></select>
+
+                            <button class="model-content-form-submit-btn">Xác nhận</button>
+                        </main>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="module" src="script/manager.js"></script>
+</html>

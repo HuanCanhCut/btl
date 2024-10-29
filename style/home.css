@@ -2,7 +2,7 @@
 .app {
     width: 100vw;
     min-height: 100vh;
-    background-color: #e7e7e7;
+    background-color: var(--default-background);
 }
 
 /* MAIN */
@@ -38,11 +38,11 @@
 }
 
 .sidebar-item.active {
-    background-color: #e7e7e7;
+    background-color: var(--default-background);
 }
 
 .sidebar-item:hover {
-    background-color: #e7e7e7;
+    background-color: var(--default-background);
 }
 
 /* CONTENT */

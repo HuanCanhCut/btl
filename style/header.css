@@ -53,7 +53,7 @@ a {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: #e7e7e7;
+    background-color: var(--default-background);
 }
 
 .tabs {
@@ -65,7 +65,7 @@ a {
     cursor: pointer;
     padding: 10px 16px;
     border-radius: 4px;
-    background-color: #e7e7e7;
+    background-color: var(--default-background);
     border: none;
 }
 

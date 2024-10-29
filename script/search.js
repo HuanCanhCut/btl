@@ -8,14 +8,14 @@ const overlay = document.querySelector('.overlay')
 const model = document.querySelector('.model')
 
 const app = {
-    products: JSON.parse(localStorage.getItem('products')) || products,
+    products: JSON.parse(localStorage.getItem('product')) || products,
     cart: JSON.parse(localStorage.getItem('cart')) || [],
 
     handleSearch() {
         const value = input.value.trim()
         if (!value) return
 
-        const result = products.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
+        const result = this.products.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
         this.renderProductList(result)
     },
 
@@ -48,7 +48,9 @@ const app = {
     },
 
     handleEvent() {
-        searchBtn.addEventListener('click', this.handleSearch)
+        searchBtn.onclick = () => {
+            this.handleSearch()
+        }
 
         productList.onclick = (e) => {
             event.openModel(e, this.products)

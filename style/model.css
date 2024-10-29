@@ -40,7 +40,7 @@
 }
 
 .model-header {
-    border-bottom: 1px solid #e7e7e7;
+    border-bottom: 1px solid var(--default-background);
     padding-bottom: 16px;
 }
 
@@ -56,7 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e7e7e7;
+    background-color: var(--default-background);
 }
 
 .model-close i {

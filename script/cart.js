@@ -16,6 +16,12 @@ const app = {
     productSelected: [],
 
     renderProduct() {
+        if (this.cart.length === 0) {
+            productList.innerHTML =
+                '<p class="cart-empty"><span><i class="fa-solid fa-cart-shopping"></i></span>Không có sản phẩm nào trong giỏ hàng</p>'
+            return
+        }
+
         const html = this.cart.map((item) => {
             return `
                 <li class="product-item">
