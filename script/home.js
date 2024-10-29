@@ -109,7 +109,7 @@ const app = {
 
             if (e.target.closest('.model-add-cart')) {
                 const productId = e.target.closest('.model-add-cart').dataset.id
-                event.addToCart(productId, products, this.cart)
+                event.addToCart(productId, this.products, this.cart)
             }
         }
 
