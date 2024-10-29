@@ -10,6 +10,17 @@
     display: none;
 }
 
+.back-btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    margin: 20px 0 0 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+
 .main.active {
     display: block;
 }
